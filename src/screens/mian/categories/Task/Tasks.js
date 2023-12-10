@@ -1,21 +1,11 @@
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import TwoLines from "../../../../components/reused/TwoLines";
-import MicroTasks from "../MicroTasks";
+import MicroTasks from "./MicroTasks";
 import {useState} from "react";
+import {useNavigation} from "@react-navigation/native";
 
-const TasksCategory = ({
-                           categoryName,
-                           tasksList,
-                           toggleTaskState,
-                           backgroundColor,
-                           style,
-                           type,
-                           orientation,
-                           visibleTasksType
-                       }) => {
-
-    const [opacity, setOpacity] = useState(0)
-
+const Tasks = ({categoryName, tasksList, toggleTaskState, backgroundColor, type, visibleTasksType}) => {
+    const navigation = useNavigation()
     const modifiedName = categoryName.split(/(?=[A-Z])/).join(' ')
     const filteredTasksList = tasksList.filter(task => {
         switch (visibleTasksType) {
@@ -27,8 +17,13 @@ const TasksCategory = ({
                 return true
         }
     })
+
     if (filteredTasksList.length === 0) {
         return null
+    }
+
+    const onPress = () => {
+        navigation.navigate('TaskInformation', {name: categoryName, backgroundColor: backgroundColor})
     }
     const listOfTasks = filteredTasksList
         .map(task =>
@@ -39,34 +34,37 @@ const TasksCategory = ({
                 id={task.id}
                 task={task.text}
                 parentName={categoryName}
-            />)
+            />
+        )
 
     return (
-        <View
+        <TouchableOpacity
+            onPress={onPress}
             style={[styles.wrapper, {
                 backgroundColor: backgroundColor,
                 borderRadius: 50
             }]}>
-            <TwoLines backgroundColor={backgroundColor} categoryName={categoryName} opacity={opacity}
-                      setOpacity={setOpacity}/>
+            <TwoLines/>
             <View style={{marginTop: 20}}>
                 <Text style={styles.text}>{modifiedName}</Text>
                 {listOfTasks}
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     text: {
         fontSize: 30,
-        fontWeight: '500'
+        fontWeight: '500',
+        width: '90%'
     },
     wrapper: {
-        width: 180,
+        width: '100%',
         padding: 10,
-        margin: 50
+        paddingBottom: 20,
+        marginBottom: 5
     }
 })
 
-export default TasksCategory;
+export default Tasks;

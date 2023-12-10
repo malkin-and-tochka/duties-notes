@@ -1,9 +1,9 @@
 import {combineReducers, createStore} from "redux";
-import planForTheDayReducer from "./microTasksReducer";
+import {taskCategoriesReducer} from "./tasksCategoriesReducer";
 
 
 const reducer = combineReducers({
-    dayTasks: planForTheDayReducer
+    tasksCategories: taskCategoriesReducer
 })
 
 export const store = createStore(reducer)

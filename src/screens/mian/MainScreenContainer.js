@@ -1,11 +1,12 @@
-import {getNamesOfCategories} from "../../store/selectors/selectors";
+import {getNamesAndTypeOfCategories, getVisibleTasksType} from "../../store/selectors/selectors";
 import {connect} from "react-redux";
-import MainScreen from "../../screens/MainScreen";
+import MainScreen from "./MainScreen";
 
 
 const mapStateToProps = (state) => {
     return {
-        categoriesList: getNamesOfCategories(state)
+        categoriesList: getNamesAndTypeOfCategories(state),
+        visibleTasksType: getVisibleTasksType(state)
     }
 }
 

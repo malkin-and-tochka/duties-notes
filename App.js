@@ -1,20 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet} from 'react-native'
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import WelcomeScreen from "./src/screens/welcome/WelcomeScreen";
+import {Provider} from "react-redux";
+import {store} from "./src/store/redux/store";
+import MainScreenContainer from "./src/screens/mian/MainScreenContainer";
+import EditOrAddCategoryContainer from "./src/screens/editOrAddCategory/EditOrAddCategoryContainer";
+import TaskInformationContainer from "./src/screens/taskInformation/TaskInformationContainer";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    return (
+        <Provider store={store}>
+            <NavigationContainer style={styles.container}>
+                <Stack.Navigator initialRouteName='Welcome' screenOptions={{headerShown: false}}>
+                    <Stack.Screen name="Main" component={MainScreenContainer}/>
+                    <Stack.Screen name="Welcome" component={WelcomeScreen}/>
+                    <Stack.Screen name="EditOrAddCategory" component={EditOrAddCategoryContainer}/>
+                    <Stack.Screen name="TaskInformation" component={TaskInformationContainer}/>
+                </Stack.Navigator>
+            </NavigationContainer>
+        </Provider>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        top: 50,
+        paddingLeft: 10,
+        paddingTop: 10
+    },
+    text: {
+        color: '#FDFDFD',
+        fontSize: 50
+    }
 });

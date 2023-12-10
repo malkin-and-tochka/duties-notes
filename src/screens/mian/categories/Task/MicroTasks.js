@@ -1,5 +1,5 @@
 import {View, TouchableOpacity, StyleSheet, Text} from "react-native";
-import BlurBG from "../../../components/reused/BlurBG";
+import BlurBG from "../../../../components/reused/BlurBG";
 
 const MicroTasks = ({style, task, toggleTaskState, isExecute, id, parentName}) => {
     const onClick = () => toggleTaskState(id, parentName)
