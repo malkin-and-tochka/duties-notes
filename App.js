@@ -7,6 +7,7 @@ import {store} from "./src/store/redux/store";
 import MainScreenContainer from "./src/screens/mian/MainScreenContainer";
 import EditOrAddCategoryContainer from "./src/screens/editOrAddCategory/EditOrAddCategoryContainer";
 import TaskInformationContainer from "./src/screens/taskInformation/TaskInformationContainer";
+import NewCategory from "./src/screens/newCategory/NewCategory";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,11 +15,12 @@ export default function App() {
     return (
         <Provider store={store}>
             <NavigationContainer style={styles.container}>
-                <Stack.Navigator initialRouteName='Welcome' screenOptions={{headerShown: false}}>
+                <Stack.Navigator initialRouteName='NewCategory' screenOptions={{headerShown: false}}>
                     <Stack.Screen name="Main" component={MainScreenContainer}/>
                     <Stack.Screen name="Welcome" component={WelcomeScreen}/>
                     <Stack.Screen name="EditOrAddCategory" component={EditOrAddCategoryContainer}/>
                     <Stack.Screen name="TaskInformation" component={TaskInformationContainer}/>
+                    <Stack.Screen name="NewCategory" component={NewCategory}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>
