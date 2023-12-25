@@ -14,7 +14,7 @@ const Notes = ({categoryName, notes, backgroundColor}) => {
         navigation.navigate('TaskInformation', {name: categoryName, backgroundColor: backgroundColor})
     }
     return (
-        <TouchableOpacity onPress={onPress} style={styles.wrapper}>
+        <TouchableOpacity onPress={onPress} style={[styles.wrapper, {backgroundColor: backgroundColor}]}>
             <TwoLines/>
             <View style={{marginTop: 20}}>
                 <Text style={styles.text}>{modifiedName}</Text>
@@ -26,10 +26,10 @@ const Notes = ({categoryName, notes, backgroundColor}) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: '#F6ECC9',
         padding: 20,
         borderRadius: 50,
-        width: '100%'
+        width: '100%',
+        marginBottom: 5
     },
     text: {
         fontSize: 30,

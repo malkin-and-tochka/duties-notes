@@ -9,10 +9,10 @@ const TaskToView = ({task, backgroundColor, editTask, categoryName}) => {
     return (
         <SafeAreaView style={{width: '100%'}}>
             <ScrollView style={styles.inputWrapper}>
-                <Text style={{fontSize: 25, fontWeight: '500'}}>
-                    {task.id + 1}:{'\n'}
-                </Text>
                 <View style={styles.row}>
+                    {/*<Text style={{fontSize: 25, fontWeight: '500', color: '#000', backgroundColor: 'rgba(255,255,255,0.2)'}}>*/}
+                    {/*    {task.id + 1}*/}
+                    {/*</Text>*/}
                     <TextInput
                         editable
                         autoCapitalize={'sentences'}
@@ -20,11 +20,13 @@ const TaskToView = ({task, backgroundColor, editTask, categoryName}) => {
                         selectionColor={backgroundColor}
                         defaultValue={task.text}
                         onChangeText={text => onChange(text)}
-                        style={styles.textInput}/>
-                    <Text
-                        style={[styles.textProcess, {backgroundColor: task.isExecute ? '#E3FFC1' : '#FFD9D9'}]}>
-                        {task.isExecute ? 'Done' : 'In process'}
-                    </Text>
+                        style={styles.textInput}
+                    />
+                    <View style={[styles.textProcessWrapper, {backgroundColor: 'rgba(34, 183, 41, 0.8)'}]}>
+                        <Text style={[styles.textProcess]}>
+                            {task.isExecute ? 'Done' : 'In process'}
+                        </Text>
+                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -37,28 +39,28 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     textInput: {
-        width: '60%',
+        width: '50%',
         padding: 10,
         marginLeft: 20,
-        fontSize: 20,
-        fontWeight: '500',
-        backgroundColor: 'rgba(255,255,255,0.3)',
+        fontSize: 22,
+        fontWeight: '700',
+        backgroundColor: '#fff',
         borderRadius: 10
     },
     row: {
-        display: "flex",
+        flex: 1,
+        alignItems: "center",
         flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: "space-between",
-        width: '100%'
+        justifyContent: 'space-between'
+    },
+    textProcessWrapper: {
+        padding: 10,
+        borderRadius: 10,
+        alignSelf: 'flex-end'
     },
     textProcess: {
-        fontSize: 20,
-        fontWeight: '500',
-        marginRight: 10,
-        backgroundColor: 'rgba(255,255,255,0.3)',
-        padding: 10,
-        borderRadius: 10
+        fontSize: 22,
+        fontWeight: '700'
     }
 })
 

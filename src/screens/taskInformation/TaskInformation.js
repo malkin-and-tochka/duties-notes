@@ -27,6 +27,9 @@ const TaskInformation = ({backgroundColor, tasksList, categoryName, type, notes,
             <Text style={styles.opacityHelp}>
                 Tap to edit
             </Text>
+            <Text style={styles.yourList}>
+                Your list:
+            </Text>
             <ScrollView contentContainerStyle={{flexGrow: 1, alignItems: 'center'}} style={styles.inputWrapper}>
                 {type === 'tasks' ?
                     tasksListToView
@@ -65,6 +68,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '500',
         alignSelf: 'flex-end',
+        marginRight: 20
+    },
+    yourList: {
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        padding: 10,
+        borderRadius: 10,
+        fontSize: 25,
+        fontWeight: '500',
+        alignSelf: 'flex-start',
         marginRight: 20
     },
     inputWrapper: {

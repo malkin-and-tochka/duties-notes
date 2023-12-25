@@ -5,9 +5,9 @@ import WelcomeScreen from "./src/screens/welcome/WelcomeScreen";
 import {Provider} from "react-redux";
 import {store} from "./src/store/redux/store";
 import MainScreenContainer from "./src/screens/mian/MainScreenContainer";
-import EditOrAddCategoryContainer from "./src/screens/editOrAddCategory/EditOrAddCategoryContainer";
+import AddCategoryContainer from "./src/screens/AddCategory/AddCategoryContainer";
 import TaskInformationContainer from "./src/screens/taskInformation/TaskInformationContainer";
-import NewCategory from "./src/screens/newCategory/NewCategory";
+import NewCategoryContainer from "./src/screens/newCategory/NewCategoryContainer";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,12 +15,12 @@ export default function App() {
     return (
         <Provider store={store}>
             <NavigationContainer style={styles.container}>
-                <Stack.Navigator initialRouteName='NewCategory' screenOptions={{headerShown: false}}>
+                <Stack.Navigator initialRouteName='Welcome' screenOptions={{headerShown: false}}>
                     <Stack.Screen name="Main" component={MainScreenContainer}/>
                     <Stack.Screen name="Welcome" component={WelcomeScreen}/>
-                    <Stack.Screen name="EditOrAddCategory" component={EditOrAddCategoryContainer}/>
+                    <Stack.Screen name="EditOrAddCategory" component={AddCategoryContainer}/>
                     <Stack.Screen name="TaskInformation" component={TaskInformationContainer}/>
-                    <Stack.Screen name="NewCategory" component={NewCategory}/>
+                    <Stack.Screen name="NewCategory" component={NewCategoryContainer}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>

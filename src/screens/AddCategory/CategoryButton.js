@@ -2,14 +2,10 @@ import {TouchableOpacity, StyleSheet, Text} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 
 
-const CategoryButton = ({categoryName, backgroundColor}) => {
-    const navigation = useNavigation()
+const CategoryButton = ({categoryName, backgroundColor, onPress}) => {
     const splitName = categoryName.split(/(?=[A-Z])/).join(' ')
-    const onPressGoToEditor = () => {
-        navigation.navigate('TaskInformation', {name: categoryName, backgroundColor: backgroundColor})
-    }
     return (
-        <TouchableOpacity onPress={onPressGoToEditor} style={[styles.container, {backgroundColor: backgroundColor}]}>
+        <TouchableOpacity onPress={onPress} style={[styles.container, {backgroundColor: backgroundColor}]}>
             <Text style={styles.text }>{splitName}</Text>
         </TouchableOpacity>
     );

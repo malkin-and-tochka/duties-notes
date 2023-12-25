@@ -70,41 +70,6 @@ const initialState = {
             outstandingTasksNumber: 3,
             color: '#98B7DB'
         },
-        // 'PlanForTheWeek3': {
-        //     tasks: [
-        //         {id: 0, text: 'first position', isExecute: false},
-        //         {id: 1, text: 'second position', isExecute: false}
-        //     ],
-        //     type: 'tasks',
-        //     allTasksNumber: 2,
-        //     completedTasksNumber: 0,
-        //     outstandingTasksNumber: 2,
-        //     color: '#98B7DB'
-        // },
-        // 'PlanForTheWeek2': {
-        //     tasks: [
-        //         {id: 0, text: 'first position', isExecute: false},
-        //         {id: 1, text: 'second position', isExecute: false},
-        //         {id: 2, text: 'third position', isExecute: false}
-        //     ],
-        //     type: 'tasks',
-        //     allTasksNumber: 3,
-        //     completedTasksNumber: 0,
-        //     outstandingTasksNumber: 3,
-        //     color: '#98B7DB'
-        // },
-        // 'PlanForTheWeek1': {
-        //     tasks: [
-        //         {id: 0, text: 'first position', isExecute: false},
-        //         {id: 1, text: 'second position', isExecute: false},
-        //         {id: 2, text: 'third position', isExecute: false}
-        //     ],
-        //     type: 'tasks',
-        //     allTasksNumber: 3,
-        //     completedTasksNumber: 0,
-        //     outstandingTasksNumber: 3,
-        //     color: '#98B7DB'
-        // }
     },
     visibleTasksType: 'all'
 }
@@ -131,7 +96,7 @@ export const taskCategoriesReducer = (state = initialState, action) => {
         case ADD_NOTE_CATEGORY:
             const newNoteCategoryName = getTheCategoriesName(action.categoryName)
             const newNoteCategory = {
-                note: action.note,
+                note: 'Your note',
                 type: 'notes',
                 color: action.color
             }

@@ -27,17 +27,27 @@ const colorizeText = (inputText) => {
     });
 }
 
-const EditOrAddCategory = ({categoriesList}) => {
+const AddCategory = ({categoriesList}) => {
     const navigation = useNavigation()
     const goBack = () => navigation.navigate('Main')
     const colorizedText = colorizeText('Edit exist\ncategories:')
     const colorizedText1 = colorizeText('Or create\n' + 'a NEW category:')
 
+    const onPressGoToEditor = () => {
+        navigation.navigate('NewCategory')
+    }
     const existCategoriesList = categoriesList
-        .map((category, index) => <CategoryButton
-            key={index}
-            categoryName={category.name}
-            backgroundColor={category.color}/>
+        .map((category, index) => {
+                const onPress = () => {
+                    navigation.navigate('TaskInformation', {name: category.name, backgroundColor: category.color})
+                }
+                return <CategoryButton
+                    key={index}
+                    categoryName={category.name}
+                    backgroundColor={category.color}
+                    onPress={onPress}
+                />
+            }
         )
 
     return (
@@ -49,7 +59,8 @@ const EditOrAddCategory = ({categoriesList}) => {
                     <Text style={[styles.text, {color: '#fff'}]}>{colorizedText}</Text>
                     {existCategoriesList}
                     <Text style={[styles.text, {color: '#fff'}]}>{colorizedText1}</Text>
-                    <CategoryButton categoryName={'New Category'} backgroundColor={'#F6ECC9'}/>
+                    <CategoryButton onPress={onPressGoToEditor} categoryName={'New Category'}
+                                    backgroundColor={'#F6ECC9'}/>
                     <Button onPress={goBack} title={'go back'}></Button>
                 </ScrollView>
             </SafeAreaView>
@@ -79,4 +90,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default EditOrAddCategory;
+export default AddCategory;

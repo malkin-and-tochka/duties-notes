@@ -1,18 +1,29 @@
-import {ScrollView, StatusBar, StyleSheet, View, Text, TouchableOpacity, TextInput} from "react-native";
+import {StatusBar, StyleSheet, View, Text, TouchableOpacity, TextInput, Button} from "react-native";
 import Header from "../../components/Header";
 import React, {useState} from "react";
+import {useNavigation} from "@react-navigation/native";
 
 
-const NewCategory = () => {
-    const [radioCategory, setRadioCategory] = useState('tasks')
+const NewCategory = ({addTaskCategory, addNoteCategory}) => {
+    const [radioCategory, setRadioCategory] = useState('')
     const [name, setName] = useState('')
     const [color, setColor] = useState('')
+    const navigation = useNavigation()
     const setRadioTasks = () => setRadioCategory('tasks')
     const setRadioNotes = () => setRadioCategory('notes')
+
+    const submitOnPress = () => {
+        if(radioCategory !== '' || name !== '' || color !== '') {
+            if (radioCategory === 'tasks') addTaskCategory(name, color)
+            if (radioCategory === 'notes') addNoteCategory(name, color)
+        }
+    }
+
+    const goBack = () => navigation.navigate('Main')
+
     return (
         <View style={styles.container}>
             <StatusBar/>
-            <ScrollView vertical>
                 <Header title={'Add what\n' + 'you want'}/>
                 <View style={styles.highWrapper}>
                     <View style={[styles.colorWrapper, {backgroundColor: '#F7D14C'}]}>
@@ -40,17 +51,17 @@ const NewCategory = () => {
                     <TextInput value={name} onChangeText={setName} placeholder={'Type block name'}
                                style={styles.nameInput}/>
                 </View>
-                <View style={styles.highWrapper}>
-                    <View style={[styles.colorWrapper, {backgroundColor: '#F7D14C'}]}>
-                        <Text style={styles.text}>
-                            Choose Color
-                        </Text>
-                    </View>
-                </View>
+                {/*<View style={styles.highWrapper}>*/}
+                {/*    <View style={[styles.colorWrapper, {backgroundColor: '#F7D14C'}]}>*/}
+                {/*        <Text style={styles.text}>*/}
+                {/*            Choose Color*/}
+                {/*        </Text>*/}
+                {/*    </View>*/}
+                {/*</View>*/}
                 <View style={styles.highWrapper}>
                     <View style={[styles.colorWrapper, {backgroundColor: '#F6ECC9'}]}>
                         <Text style={styles.text}>
-                            Or take it from following
+                            Choose Color from following
                         </Text>
                     </View>
                     <View style={styles.row}>
@@ -67,14 +78,14 @@ const NewCategory = () => {
                     </View>
                 </View>
                 <View style={styles.row}>
-                    <TouchableOpacity style={styles.completeButton}>
+                    <TouchableOpacity onPress={submitOnPress} style={styles.completeButton}>
                         <Text style={styles.buttonText}>
-                            Complete
+                            Create
                         </Text>
                     </TouchableOpacity>
                     <Text style={{color: '#fff', fontSize: 26, marginLeft: 10}}>{'<-'} If you are ready</Text>
                 </View>
-            </ScrollView>
+            <Button onPress={goBack} title={'go back'}></Button>
         </View>
     );
 };

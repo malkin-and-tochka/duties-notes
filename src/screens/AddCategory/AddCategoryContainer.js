@@ -1,6 +1,6 @@
 import {getNamesAndTypeOfCategories} from "../../store/selectors/selectors";
 import {connect} from "react-redux";
-import EditOrAddCategory from "./EditOrAddCategory";
+import AddCategory from "./AddCategory";
 
 const mapStateToProps = state => {
     return {
@@ -8,5 +8,5 @@ const mapStateToProps = state => {
     }
 }
 
-const EditOrAddCategoryContainer = connect(mapStateToProps, {})(EditOrAddCategory)
-export default EditOrAddCategoryContainer
+const AddCategoryContainer = connect(mapStateToProps, {})(AddCategory)
+export default AddCategoryContainer
