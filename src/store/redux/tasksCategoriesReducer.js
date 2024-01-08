@@ -1,3 +1,5 @@
+import {getTheCategoriesName} from "../../components/reused/functions";
+
 const ADD_TASK_CATEGORY = 'ADD-TASKS-CATEGORY'
 const ADD_NOTE_CATEGORY = 'ADD-NOTES-CATEGORY'
 const REMOVE_TASKS_CATEGORY = 'REMOVE-TASKS-CATEGORY'
@@ -6,12 +8,7 @@ const REMOVE_TASK_FROM_CATEGORY = 'REMOVE-TASK-FROM-CATEGORY'
 const TOGGLE_TASK_STATE = 'TOGGLE-TASK-STATE'
 const EDIT_TASK = 'EDIT-TASK'
 const CHANGE_VISIBLE_TASKS_TYPE = 'CHANGE-VISIBLE-TASKS-TYPE'
-
-const getTheCategoriesName = str => {
-    const words = str.split(' ');
-    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-    return capitalizedWords.join('');
-}
+const FILTER_TASKS_LIST_BY_EMPTY_TASKS = 'FILTER-TASKS-LIST-BY-EMPTY-TASKS'
 
 const initialState = {
     categories: {
@@ -119,22 +116,39 @@ export const taskCategoriesReducer = (state = initialState, action) => {
             }
         case
         EDIT_TASK: {
+            const editedName = getTheCategoriesName(action.categoryName)
             let newState = state.categories
             if (action.categoryType === 'notes') {
-                newState[action.categoryName].note = action.newText
+                newState[editedName].note = action.newText
             } else {
-                newState[action.categoryName].tasks[action.id].text = action.newText
+                newState[editedName].tasks[action.id].text = action.newText
             }
             return {...state, categories: newState}
         }
         case
-        ADD_TASK_TO_CATEGORY:
+        ADD_TASK_TO_CATEGORY: {
             const newAddState = state.categories
-            newAddState[action.name].tasks = [...newAddState[action.name].tasks, action.task]
+            const editedName = getTheCategoriesName(action.categoryName)
+            const newTask = {id: newAddState[editedName].tasks.length, text: '', isExecute: false}
+            newAddState[editedName].tasks = [...newAddState[editedName].tasks, newTask]
             return {
                 ...state,
                 categories: newAddState
             }
+        }
+        case
+        FILTER_TASKS_LIST_BY_EMPTY_TASKS: {
+            const newFilterState = state.categories
+            const editedName = getTheCategoriesName(action.categoryName)
+            newFilterState[editedName].tasks = newFilterState[editedName].tasks.filter(task => task.text !== '')
+            for (let i = 0; i < newFilterState[editedName].tasks.length; i++) {
+                newFilterState[editedName].tasks[i].id = i
+            }
+            return {
+                ...state,
+                categories: newFilterState
+            }
+        }
         case
         REMOVE_TASK_FROM_CATEGORY:
             return {
@@ -185,6 +199,8 @@ export const addNoteCategory = (categoryName, color) => ({
     color
 })
 export const toggleTaskState = (id, name) => ({type: TOGGLE_TASK_STATE, name, id})
+export const addTaskToCategory = (categoryName) => ({type: ADD_TASK_TO_CATEGORY, categoryName})
+export const filterTasksListByEmpty = (categoryName) => ({type: FILTER_TASKS_LIST_BY_EMPTY_TASKS, categoryName})
 export const editTask = (id, categoryName, newText, categoryType) => ({
     type: EDIT_TASK,
     categoryName,

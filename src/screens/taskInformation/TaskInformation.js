@@ -1,24 +1,43 @@
-import {View, StyleSheet, Text, TextInput, ScrollView, SafeAreaView} from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import BottomPanel from "../../components/BottomPanel";
-import {useState} from "react";
 import TaskToView from "./TaskToView";
+import {useEffect} from "react";
+import GoHomeButton from "../../components/reused/GoHomeButton";
 
-const TaskInformation = ({backgroundColor, tasksList, categoryName, type, notes, editTask}) => {
+
+const TaskInformation = ({
+                             backgroundColor,
+                             tasksList,
+                             categoryName,
+                             type,
+                             notes,
+                             addTaskToCategory,
+                             editTask,
+                             filterTasksListByEmpty,
+                             navigation
+                         }) => {
+    useEffect(() => {
+        return navigation.addListener('blur', () => filterTasksListByEmpty(categoryName))
+    }, [])
     const modifiedCategoryName = categoryName.split(/(?=[A-Z])/).join(' ')
     let tasksListToView
     if (tasksList) {
         tasksListToView = tasksList
             .map(task => <TaskToView
+                id={task.id}
                 key={task.id}
                 backgroundColor={backgroundColor}
                 task={task}
                 editTask={editTask}
-                categoryName={categoryName}/>
-            )
+                categoryName={categoryName}/>)
     }
     const onChange = (newText) => {
         editTask(0, categoryName, newText, 'notes')
     }
+    const addTaskOnPress = () => {
+        addTaskToCategory(categoryName)
+    }
+    const goHomeContainer = type ==='tasks' ? () => filterTasksListByEmpty(categoryName) : () => {}
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: backgroundColor}]}>
             <Text style={styles.title}>
@@ -30,21 +49,31 @@ const TaskInformation = ({backgroundColor, tasksList, categoryName, type, notes,
             <Text style={styles.yourList}>
                 Your list:
             </Text>
-            <ScrollView contentContainerStyle={{flexGrow: 1, alignItems: 'center'}} style={styles.inputWrapper}>
-                {type === 'tasks' ?
-                    tasksListToView
-                    :
-                    <TextInput
-                        editable
-                        multiline
-                        autoCapitalize={'sentences'}
-                        value={notes}
-                        cursorColor={'#000'}
-                        selectionColor={backgroundColor}
-                        onChangeText={text => onChange(text)}
-                        style={styles.textInput}
-                    />}
-            </ScrollView>
+            <View>
+
+                <ScrollView contentContainerStyle={{flexGrow: 1, alignItems: 'center'}} style={styles.inputWrapper}>
+                    {type === 'tasks' ?
+                        tasksListToView
+                        :
+                        <TextInput
+                            editable
+                            multiline
+                            autoCapitalize={'sentences'}
+                            value={notes}
+                            cursorColor={'#000'}
+                            selectionColor={backgroundColor}
+                            onChangeText={text => onChange(text)}
+                            style={styles.textInput}
+                        />}
+                </ScrollView>
+            </View>
+            {type === 'tasks' ?
+                <TouchableOpacity onPress={addTaskOnPress} style={styles.addTaskToListWrapper}>
+                    <Text style={styles.addTaskToListText}>Add task</Text>
+                </TouchableOpacity>
+                :
+                null}
+            <GoHomeButton onGoHome={goHomeContainer}/>
             <BottomPanel/>
         </SafeAreaView>
     );
@@ -81,7 +110,6 @@ const styles = StyleSheet.create({
     },
     inputWrapper: {
         width: '100%',
-        display: 'flex',
         marginTop: 10
     },
     textInput: {
@@ -91,6 +119,17 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         backgroundColor: 'rgba(255,255,255,0.3)',
         borderRadius: 10
+    },
+    addTaskToListWrapper: {
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 10,
+        alignSelf: 'flex-end',
+        backgroundColor: 'rgba(28, 149, 214, 0.8)'
+    },
+    addTaskToListText: {
+        fontSize: 20,
+        fontWeight: '500'
     }
 })
 

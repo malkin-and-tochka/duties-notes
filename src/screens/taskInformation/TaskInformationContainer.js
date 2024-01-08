@@ -1,15 +1,17 @@
 import {connect} from "react-redux";
 import TaskInformation from "./TaskInformation";
 import {getNotes, selectTasksByName, typeOfCategory} from "../../store/selectors/selectors";
-import {editTask} from "../../store/redux/tasksCategoriesReducer";
+import {addTaskToCategory, editTask, filterTasksListByEmpty} from "../../store/redux/tasksCategoriesReducer";
+import {getTheCategoriesName} from "../../components/reused/functions";
 
 
 const mapStateToProps = (state, props) => {
-    const categoryType = typeOfCategory(state.tasksCategories, props.route.params.name)
+    const categoryName = getTheCategoriesName(props.route.params.name)
+    const categoryType = typeOfCategory(state.tasksCategories, categoryName)
     if (categoryType === 'tasks') {
         return {
             ...props.route.params,
-            tasksList: selectTasksByName(state.tasksCategories, props.route.params.name),
+            tasksList: selectTasksByName(state.tasksCategories, categoryName),
             categoryName: props.route.params.name,
             type: categoryType
         }
@@ -18,12 +20,14 @@ const mapStateToProps = (state, props) => {
             ...props.route.params,
             type: categoryType,
             categoryName: props.route.params.name,
-            notes: getNotes(state.tasksCategories, props.route.params.name)
+            notes: getNotes(state.tasksCategories, categoryName)
         }
     }
 }
 
 const TaskInformationContainer = connect(mapStateToProps, {
-    editTask
+    editTask,
+    addTaskToCategory,
+    filterTasksListByEmpty
 })(TaskInformation)
 export default TaskInformationContainer

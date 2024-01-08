@@ -2,6 +2,7 @@ import {StatusBar, StyleSheet, View, Text, TouchableOpacity, TextInput, Button} 
 import Header from "../../components/Header";
 import React, {useState} from "react";
 import {useNavigation} from "@react-navigation/native";
+import GoHomeButton from "../../components/reused/GoHomeButton";
 
 
 const NewCategory = ({addTaskCategory, addNoteCategory}) => {
@@ -16,6 +17,7 @@ const NewCategory = ({addTaskCategory, addNoteCategory}) => {
         if(radioCategory !== '' || name !== '' || color !== '') {
             if (radioCategory === 'tasks') addTaskCategory(name, color)
             if (radioCategory === 'notes') addNoteCategory(name, color)
+            navigation.navigate('TaskInformation', {name: name, backgroundColor: color})
         }
     }
 
@@ -51,13 +53,6 @@ const NewCategory = ({addTaskCategory, addNoteCategory}) => {
                     <TextInput value={name} onChangeText={setName} placeholder={'Type block name'}
                                style={styles.nameInput}/>
                 </View>
-                {/*<View style={styles.highWrapper}>*/}
-                {/*    <View style={[styles.colorWrapper, {backgroundColor: '#F7D14C'}]}>*/}
-                {/*        <Text style={styles.text}>*/}
-                {/*            Choose Color*/}
-                {/*        </Text>*/}
-                {/*    </View>*/}
-                {/*</View>*/}
                 <View style={styles.highWrapper}>
                     <View style={[styles.colorWrapper, {backgroundColor: '#F6ECC9'}]}>
                         <Text style={styles.text}>
@@ -85,7 +80,7 @@ const NewCategory = ({addTaskCategory, addNoteCategory}) => {
                     </TouchableOpacity>
                     <Text style={{color: '#fff', fontSize: 26, marginLeft: 10}}>{'<-'} If you are ready</Text>
                 </View>
-            <Button onPress={goBack} title={'go back'}></Button>
+            <GoHomeButton onGoHome={()=>{}}/>
         </View>
     );
 };

@@ -3,16 +3,11 @@ import {useState} from "react";
 
 
 const TaskToView = ({task, backgroundColor, editTask, categoryName}) => {
-    const onChange = newText => {
-        editTask(task.id, categoryName, newText, 'tasks');
-    }
+    const onChange = newText => editTask(task.id, categoryName, newText, 'tasks');
     return (
         <SafeAreaView style={{width: '100%'}}>
             <ScrollView style={styles.inputWrapper}>
                 <View style={styles.row}>
-                    {/*<Text style={{fontSize: 25, fontWeight: '500', color: '#000', backgroundColor: 'rgba(255,255,255,0.2)'}}>*/}
-                    {/*    {task.id + 1}*/}
-                    {/*</Text>*/}
                     <TextInput
                         editable
                         autoCapitalize={'sentences'}
@@ -21,8 +16,9 @@ const TaskToView = ({task, backgroundColor, editTask, categoryName}) => {
                         defaultValue={task.text}
                         onChangeText={text => onChange(text)}
                         style={styles.textInput}
+                        placeholder={'New task'}
                     />
-                    <View style={[styles.textProcessWrapper, {backgroundColor: 'rgba(34, 183, 41, 0.8)'}]}>
+                    <View style={[styles.textProcessWrapper]}>
                         <Text style={[styles.textProcess]}>
                             {task.isExecute ? 'Done' : 'In process'}
                         </Text>
@@ -56,11 +52,12 @@ const styles = StyleSheet.create({
     textProcessWrapper: {
         padding: 10,
         borderRadius: 10,
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
+        backgroundColor: 'rgba(34, 183, 41, 0.8)'
     },
     textProcess: {
         fontSize: 22,
-        fontWeight: '700'
+        fontWeight: '500'
     }
 })
 
